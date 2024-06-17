@@ -4,21 +4,26 @@ from functions import *
 
 window = Window('Grand Line Adventures')
 
-print("Posicione o seu mouse no pixel de coletar os alimentos.")
+print("Posicione o seu mouse no pixel de coletar os alimentos e pressione aspas simples -> (').")
 
-keyboard.wait('h')
+keyboard.wait("'")
 
 x, y = pyautogui.position()
 
 print(f'x = {x}, y = {y}')
 
-qntkits = int(input('quantidade de kits desejada: '))
+while True:
+    qntkits = int(input('quantidade de kits desejada: '))
+    if qntkits < 8 and qntkits > 0:
+        break
+    print("A quantidade de kits deve estar entre 0 e 7")
+
 print(f'Para fazer {qntkits} você precisa de {qntkits * 3700} beries.')
 
-print("Se posicione olhando para a geladeira ao lado da lista de receitas para o kit baratie")
-print("Aperte 'H' quando estiver pronto.")
+print("Se posicione olhando para a geladeira ao lado da lista de receitas para o kit baratie.")
+print("E pressione aspas simples -> (') quando estiver pronto.")
 
-keyboard.wait('h')
+keyboard.wait("'")
 
 sleep(2)
 
@@ -94,8 +99,6 @@ def fazer_item(qnt, pegar=True):
             sleep(0.2)
             window.key(RIGHT)
 
-        
-
         set_foreground_window()
         sleep(0.2)
         keyboard.press_and_release('enter')
@@ -119,6 +122,17 @@ def up(times):
     for c in range(times):
         sleep(0.2)
         window.key(UP)
+
+def left(times):
+    for c in range(times):
+        sleep(0.2)
+        window.key(LEFT)
+
+def right(times):
+    for c in range(times):
+        sleep(0.2)
+        window.key(RIGHT)
+
 
 def open_door():
     set_foreground_window()
@@ -144,7 +158,8 @@ def spam_x(n):
 
 # pegar os cortaveis geladeira
 def pegar_os_cortaveis_geladeira():
-    window.key(LEFT, 1)
+    left(2)
+
     open_door()
 
     down(1)
@@ -165,8 +180,9 @@ def pegar_os_cortaveis_geladeira():
 
 #pegar os cortaveis armario
 def pegar_os_cortaveis_armario():
-    window.key(UP, 0.2)
-    window.key(LEFT)
+    up(1)
+
+    left(1)
 
     open_door()
 
@@ -184,19 +200,18 @@ def pegar_os_cortaveis_armario():
 
 # cortar os cortaveis
 def cortar_os_cortaveis():
-    window.key(RIGHT, 0.7)
-    window.key(UP, 0.2)
-    window.key(RIGHT)
-
+    right(1)
+    up(1)
+    right(1)
+    
     sleep(1)
-
     spam_x(n_cortaveis)
 
 # pegar farinha
 def pegar_farinha():
-    window.key(DOWN, 0.2)
-    sleep(0.2)
-    window.key(LEFT, 0.4)
+    down(1)
+
+    left(1)
 
     open_door()
 
@@ -210,8 +225,8 @@ def pegar_farinha():
 
 # pegar agua
 def pegar_agua():
-    window.key(DOWN, 0.2)
-    window.key(LEFT)
+    down(1)
+    left(1)
 
     open_door()
 
@@ -225,25 +240,27 @@ def pegar_agua():
 
 # transformar em massa
 def transformar_em_massa():
-    window.key(DOWN, 0.4)
-    window.key(RIGHT, 0.2)
+    down(2)
+    right(1)
     sleep(1)
 
     spam_x(armario['farinha'])
 
 # cortar o suficiente para macarrao
 def cortar_massa():
-    window.key(UP, 1.2)
-    window.key(RIGHT)
+    up(4)
+
+    right(1)
     sleep(1)
 
     spam_x(subcomponentes['macarrao'] * 5)
 
 # colocar o macarrao para fazer
 def fazer_macarrao():
-    window.key(UP, 0.2)
-    sleep(0.4)
-    window.key(LEFT, 0.2)
+    up(1)
+
+    left(1)
+
     sleep(1)
 
     open_door()
@@ -256,8 +273,10 @@ def fazer_macarrao():
 
 # pegar o resto do armario
 def pegar_resto_armario():
-    window.key(DOWN, 0.4)
-    window.key(LEFT)
+    down(2)
+
+    left(1)
+
     sleep(1)
 
     open_door()
@@ -292,8 +311,10 @@ def pegar_resto_armario():
 
 # pegar o resto do geladeira
 def pegar_resto_geladeira():
-    window.key(DOWN, 0.4)
-    window.key(LEFT)
+    down(2)
+
+    left(1)
+
     sleep(1)
 
     open_door()
@@ -324,8 +345,10 @@ def pegar_resto_geladeira():
 
 # pegar tigelas
 def pegar_tigelas():
-    window.key(DOWN, 0.2)
-    window.key(LEFT)
+    down(1)
+
+    left(1)
+
     sleep(1)
 
     open_door()
@@ -338,8 +361,10 @@ def pegar_tigelas():
 
 # colocar o resto os subcomponentes para fazer
 def fazer_bife_frito():
-    window.key(DOWN, 0.4)
-    window.key(LEFT)
+    down(2)
+
+    left(1)
+
     sleep(1)
 
     open_door()
@@ -353,8 +378,10 @@ def fazer_bife_frito():
     
 
 def fazer_bife_prime():
-    window.key(UP, 0.2)
-    window.key(LEFT)
+    up(1)
+
+    left(1)
+
     sleep(1)
 
     open_door()
@@ -367,8 +394,10 @@ def fazer_bife_prime():
 
 
 def fazer_arroz():
-    window.key(UP, 1.8)
-    window.key(LEFT)
+    up(6)
+
+    left(1)
+
     sleep(1)
 
     open_door()
@@ -382,32 +411,49 @@ def fazer_arroz():
 
 # coletar os subcomponentes
 def coletar_subcomponenetes():
+    #cozinhar
     open_door()
+
     down(1)
+
     pegar_item()
+
     down(1)
+
     pegar_item()
+
     up(1)
+
     close_door()
 
-    window.key(DOWN, 2.2)
-    window.key(LEFT)
+    down(7)
+
+    left(1)
+
+    # fritar
+    open_door()
+
+    down(1)
+
+    pegar_item()
+
+    close_door()
+
+    up(1)
+
+    left(1)
 
     open_door()
+
     down(1)
+
     pegar_item()
+
     close_door()
 
-    window.key(UP, 0.2)
-    window.key(LEFT)
-
-    open_door()
     down(1)
-    pegar_item()
-    close_door()
-
-    window.key(DOWN, 0.2)
-    window.key(LEFT)
+    
+    left(1)
 
 
 # fazer o resto
@@ -423,8 +469,8 @@ def fazer_componenetes():
 
     close_door()
 
-    window.key(UP, 0.2)
-    window.key(LEFT)
+    up(1)
+    left(1)
 
 
     open_door()
@@ -441,9 +487,9 @@ def fazer_componenetes():
 
     close_door()
 
-    window.key(UP, 2)
-    sleep(0.2)
-    window.key(LEFT)
+    up(6)
+
+    left(1)
 
     open_door()
 
@@ -461,7 +507,8 @@ def fazer_componenetes():
 
     close_door()
 
-    window.key(RIGHT, 0.2)
+    right(1)
+
     sleep(1)
 
     open_door()
@@ -479,11 +526,14 @@ def fazer_componenetes():
 
 # montar o kit
 def montar_kit():
-    window.key(DOWN, 2.2)
-    window.key(LEFT)
+    down(7)
+
+    left(1)
+
     sleep(1)
 
     open_door()
+
     down(2)
 
     for c in range(5):
@@ -494,9 +544,9 @@ def montar_kit():
 
     close_door()
 
-    window.key(UP, 0.2)
-    window.key(LEFT)
+    up(1)
 
+    left(1)
 
     open_door()
     
@@ -512,9 +562,9 @@ def montar_kit():
 
     close_door()
 
-    window.key(UP, 2)
-    sleep(0.2)
-    window.key(LEFT)
+    up(6)
+    
+    left(1)
 
     open_door()
 
@@ -532,7 +582,7 @@ def montar_kit():
 
     close_door()
 
-    window.key(RIGHT, 0.2)
+    right(1)
     sleep(1)
 
     open_door()
@@ -572,10 +622,17 @@ for c in range(240 * qntkits):
     print(f'Proxima ação em {(240 * qntkits) - c} segundos...')
     sleep(1)
 
+print("Pressione aspas simples (') para continuar o bot.")
+keyboard.wait("'")
+
 coletar_subcomponenetes()
 fazer_componenetes()
+
 for c in range(540 * qntkits):
     print(f'Proxima ação em {(540 * qntkits) - c} segundos...')
     sleep(1)
+
+print("Pressione aspas simples (') para continuar o bot.")
+keyboard.wait("'")
 
 montar_kit()

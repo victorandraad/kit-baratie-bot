@@ -101,7 +101,7 @@ class Window:
         sleep(delay)
         self.user32.SendMessageW(self.hwnd, self.WM_RBUTTONUP, 0)
 
-    def key(self, keycode, delay=0.015):
+    def key(self, keycode, delay=0.2):
         self.keyDown(keycode)
         sleep(delay)
         self.keyUp(keycode)
